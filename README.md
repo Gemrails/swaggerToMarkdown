@@ -1,3 +1,3 @@
 # swaggerToMarkdown
 
-### Translate format from swagger into markdown
+Translate format from swagger into markdown

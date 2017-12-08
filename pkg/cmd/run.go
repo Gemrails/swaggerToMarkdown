@@ -47,7 +47,8 @@ type toolsSwaggerParams struct {
 
 const (
 	outparams = "|%s |%s |%s |%s |%s |\n"
-	outEG     = "**请求URL:**\n\n- `%s`\n\n**简要描述**\n\n- %s\n\n**请求方式:**\n\n- %s\n\n**参数:**\n\n|参数名|参数位置|必选|类型|说明|\n|:----  |:------|:---|:----- |-----   |\n%s\n**返回示例:**\n\n- %s\n\n* * *\n"
+	//outEG     = "## %s\n\n**请求URL:**\n\n- `%s`\n\n**简要描述**\n\n- %s\n\n**请求方式:**\n\n- %s\n\n**参数:**\n\n|参数名|参数位置|必选|类型|说明|\n|:----  |:------|:---|:----- |-----   |\n%s\n**返回示例:**\n\n- %s\n\n* * *\n"
+	outEG = "## %s\n\n**请求URL:**\n\n- `%s`\n\n**简要描述**\n\n- %s\n\n**请求方式:**\n\n- %s\n\n**参数:**\n\n|参数名|参数位置|必选|类型|说明|\n|:----  |:------|:---|:----- |-----   |\n%s\n\n* * *\n\n"
 )
 
 func dealMethod(method, path string, msg interface{}, c *parseConfig.Config) string {
@@ -60,6 +61,7 @@ func dealMethod(method, path string, msg interface{}, c *parseConfig.Config) str
 		return ""
 	}
 	//describe, url, method, params\n, return
+	title := fmt.Sprintf("%s", c.Get(methodKey+" > summary"))
 	desc := fmt.Sprintf("%s, %s", c.Get(methodKey+" > summary"), c.Get(methodKey+" > description"))
 	paramsL := c.Get(methodKey + " > parameters")
 	params := ""
@@ -84,7 +86,7 @@ func dealMethod(method, path string, msg interface{}, c *parseConfig.Config) str
 		}
 	}
 IGNORE:
-	outStr := fmt.Sprintf(outEG, path, desc, strings.ToUpper(method), params, "return")
+	outStr := fmt.Sprintf(outEG, title, path, desc, strings.ToUpper(method), params)
 	return outStr
 }
 
